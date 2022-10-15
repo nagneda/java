@@ -47,8 +47,9 @@ class specifier {
 		short s=2;
 		char c='A';
 		int finger=10;
-		int octNum=010;
-		int hexNum=0x10;
+		int octNum=010;//8진수로 10을 저장한 거 10진수로 8임 %o를 사용하면 8진수로 10을 출력함(이미 8진수로 저장돼있어서)
+		int hexNum=0x10;//16진수로 10을 저장한거 10진수로 16임 %x사용하면 16진수로 10을 출력함(이미 16진수로 저장돼있어서)
+		//그러니까 %o %x가 10진수를 해당 지시자의 진수로 표현한다는 건데 10진수로 10이 저장돼있으면 각각 12,A를 출력했겠지만 이미 접두사
 		int binNum=0b10;
 		System.out.printf("b:%d%n",b);
 		System.out.printf("%5d%n",finger); //파이썬에도 있는 문자열 공백 처리에 관한 기능
@@ -117,14 +118,20 @@ class FloatEx {
 		System.out.printf("f2 출력 : %f %n",f2);
 		System.out.printf("f2 자리수 지정 후 출력 : %-25.10f 공백확인%n",f2);
 		System.out.printf("d1 출력 : %f %n",d1);//%f는 기본적으로 6자리까지 출력. 실수형의 타입과 관계없음(double or float)   
-		System.out.printf("d1 자리수 지정 후 출력 : %25.20f",d1);
+		System.out.printf("d1 자리수 지정 후 출력 : %25.20f %n",d1);
+		int oct= 10;
+		int hex= 10;
+
+		System.out.printf("===========oct : %o, %x %n",oct,hex);
+		System.out.printf("f : %f %n",f1);
+		System.out.printf("f : %24.20f %n",f1);
 	}
 }
 
-class CastingEx {
+class Practice {
 	public static void main(String [] args) {
 		int i=126, j=129;
-		byte b=(byte)i;
+		byte b=(byte)i;//캐스팅에 따른 오버플로우??
 		byte c=(byte)j;//byte형은 1byte의 데이터만 저장할 수 있다. 즉 2의8승 범위로 보면 -128~127사이의 숫자만 저장 가능
 		System.out.printf(" i : %d j : %d %n", b,c);
 
@@ -134,8 +141,35 @@ class CastingEx {
 		int square = width*height;// 왜 상수를 써야하는지 잘 모르겠다. 어차피 변수 새로 지정하나 상수쓰나 똑같은데
 		System.out.printf("triangle : %d , square : %d %n",triangle, square);
 		float pi = 3;
-		long num = 2*10000000000l;
-		System.out.printf("실수 : %f 정수long : %d ",pi,num);
-		 
+		long num = 2*10000000000l;//접미사를 넣어도 되고 안 넣어도 되는데 문제가 될땐 접미사를 넣지 않았을때 정수형의 리터럴 
+		//기본자료형(int)의 값보다 큰 값이 리터럴에 들어왔을때 오버플로우가 발생.
+		//int num = 100L; 과 같이 변수의 저장범위보다 리터럴의 저장범위가 커서는 안됨. ex) int > long, float > double.
+		System.out.printf("실수 : %f 정수long : %d ",pi,num); 
+		boolean t=true;
+		System.out.println("bool 타입"+t);
+		int test1 = 'A';
+		char test2 = 66;
+		System.out.printf("%d %c %n",test1,test2);//다만 출력할때 test1을  %c로, test2를 %d로 출력하지는 못한다. 단순히 유니코드를 이진수로 변환해서 저장한다는
+		//공통점이 있다는 것 뿐
+		
+		
 	}
 }
+
+class CastingEx1 {
+	public static void main(String [] args){
+		double pi = 3.14;
+		float f=9.12345678901234567890f;
+		double d=9.12345678901234567890;
+		int num =(int)pi;
+		System.out.println(num+","+pi);//pi값은 변하지않았고 num에는 정수형 저장범위인 소수점이 없는 정수형태만 저장된 모습
+		System.out.printf("%.30f %n",f);
+		System.out.printf("%.30f %n",d);
+
+		char ch = (char)1000;
+		System.out.println(ch);
+		byte b=(byte)1000;
+		System.out.println(b);
+	}
+}
+		
