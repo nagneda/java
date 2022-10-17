@@ -168,8 +168,9 @@ class CastingEx1 {
 
 		char ch = (char)1000;
 		System.out.println(ch);
-		byte b=(byte)1000;
+		byte b=(byte)1000;//byte b = 1000;이면 에러발생
 		System.out.println(b);
+		long c = 100l; // int c = 1000l; 안된다 float f = 3.14d;와 같은 격
 	}
 }
 		
