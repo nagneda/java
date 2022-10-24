@@ -1,3 +1,6 @@
+
+//chapter3 operator(연산자)
+import java.util.*;
 class OperatorEx1 {
     public static void main(String []args){
         int a=5;
@@ -29,5 +32,111 @@ class OperatorEx2 {
         i=i++;
         System.out.println(i); 
 
+        System.out.println("5/2:" +5/2.0);
+
+    }
+}
+
+class OperatorEx3{
+    public static void main(String []args){
+        Scanner scanner = new Scanner(System.in);
+        char ch=' ';
+
+        // System.out.printf("문자를 입력하세요");
+        // //String input=scanner.nextLine(); //char 타입의 변수로는 scanner의 입력값을 받아들일 수 없는 듯하다.
+        // ch=input.charAt(0);
+
+        // if('0'<=ch && ch<='9') {
+        //     System.out.println("입력하신 문자는 숫자입니다");
+        // }
+        // if(('a'<=ch && ch<='z')||('A'<=ch && ch<='Z')) {
+        //     System.out.println("입력하신 문자는 영문자입니다");
+        // }
+        
+        boolean b = true;
+        char ch1='A';
+        System.out.printf("b : %b %n",b);
+        System.out.printf(" ch<'a' || 'z'>ch : %b %n",ch<'a' || 'z'>ch1);
+        System.out.printf("!('a'<=ch1 && ch1<='z') = %b%n",!('a'<=ch1 && ch1<='z')); //이 식과 위의 식은 같은 표현식이다. 가독성이 더 뛰어남. 논리부정연산자 ! 사용
+
+        int c=0;
+        int a=5;
+        System.out.println(a>4 || ++c==1);
+        System.out.println(c);
+        System.out.println(a==5 && c++==1);
+        System.out.println(c);
+        //and와 or의 효율적인 연산에 관한 식. 조건에 부합하지 않으면 우변의 식은 실행되지도 않고 종료되는 것을 증감연산자를 통해 알 수 있음. 값을 바꿔가면
+        //테스트해보면 좋다.
+
+    }
+}
+
+class FlowEx2{
+    public static void main(String []args){
+        int input;
+        System.out.println("숫자하나를 입력하세요");
+        Scanner scanner = new Scanner(System.in);
+        String temp = scanner.nextLine();
+        input = Integer.parseInt(temp);
+
+        if (input == 0){
+            System.out.println("입력하신 숫자는 0입니다");//블럭 생략가능 및 조건문 바로옆에 작성가능. 블럭 생략하고 아래줄에 코드 작성시 그 아래의
+            //코드는 조건문에 포함되지 않는다.
+        }else{
+            System.out.println("입력하신 숫자는 0이 아닙니다");
+        }
+        //else문 활용하기
+        
+       
+    }
+}
+
+class Score{
+    public static void main(String []args){
+        
+        System.out.println("당신의 점수를 입력하세요");
+        Scanner scanner = new Scanner(System.in);
+        int score = scanner.nextInt();
+        char grade = ' ';
+        if (score>90){
+            grade = 'A';
+        }else if (score>80){
+            grade = 'B';
+        }else if (score>70){
+            grade = 'C';
+        }else{
+            grade = 'D';
+        }
+        System.out.printf("당신의 등급은 %c입니다",grade);
+        
+
+    }
+}
+
+class grade{
+    public static void main(String [] args){
+        System.out.println("당신의 학점을 입력하세요");
+        Scanner scanner = new Scanner(System.in);
+        int score = scanner.nextInt();
+        char grade = ' ', msb=' ';
+        System.out.printf("당신의 점수는 %d입니다%n",score);
+        if (score > 90){
+            grade = 'A';
+            if (score >=98){
+                msb = '+';
+            }else if (score <= 94){
+                msb='-';
+           }
+        }else if (score >80){
+            grade = 'B';
+            if (score >=88){
+                msb = '+';
+            }else if (score <= 84){
+                msb='-';
+           }
+        }else grade='C';
+        System.out.printf("당신의 등급은 %c%c입니다",grade,msb);
+        
+        
     }
 }
