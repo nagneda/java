@@ -76,7 +76,7 @@ class WhileEx1{
 
 
         int sum=0, j=0;
-        while ((sum+=++j)<=100){
+        while ((sum+=++j)<=100){ //sum=sum+ ++j , sum<=100의 형태가 압축된 형태
             System.out.printf("sum : %d / j : %d %n",sum,j);
         }//위 아래의 코드는 동일. java에는 복합 대입연산자에 증감연산자를 합친 증감식이 많이 나오니 눈에 익혀둬야한다.
         for (sum=0, i=0;sum<=100;sum+=++i){
@@ -87,7 +87,7 @@ class WhileEx1{
     }
 }
 
-class DoWhile{
+class DoWhileEx1{
     public static void main(String [] args){
         Scanner scanner = new Scanner(System.in);
         int ran = (int)(Math.random()*10)+1, input = -1;
@@ -118,9 +118,61 @@ class DoWhile{
         }while (input1!=ran);
         System.out.println("정답이다");
 
+        
+
         //요약하자면 do-while문은 잘 쓰이지는 않으며 while의 조건값에 설령 해당하지 않더라도 1번은 수행되는데에 그 의의가 있다. 위 프로그램 예제는
         //그러한 do-while문의 특성을 느끼기에는 조금 부족했지 않나 생각된다. 위 예제는 사용자 입력 변수의 초기화를 while문 밖에서 시켜주면 조건식에서
         //에러가 발생할 일도 없고 무조건 1번은 수행시켜야 한다는 특이점도 없다. 굳이 비유하면 python의 try-except처럼 ty문이든 except문이든 에러가 발생
         //되더라도 1개는 실행되는 느낌.
     }//main의 끝
+}
+
+class DoWhileEx2{
+    public static void main(String []args){
+        for (int i = 1;i<=100;i++){
+            System.out.printf("i=%d",i);
+            int tmp=i;
+            do{
+                if(tmp%10%3==0 && tmp%10!=0)
+                    System.out.print("짝");
+            }while((tmp/=10)!=0);//몫을 판별하기 위해 10의 자리 수를 몫으로 가지며 tmp에 저장
+            System.out.println();
+                
+            }
+        }
+}
+
+class ContinueEx1{
+    public static void main(String []args){
+        Scanner scanner = new Scanner(System.in);
+        int menu =0, num=0;
+
+        while (true){
+            System.out.println("메뉴를 선택하세요 1~3(0은 종료)");
+            menu = scanner.nextInt();// String tmp = scanner.nextLine(); menu = Integer.parseInt(tmp); 입력받은 숫자문자열을 정수화 시킴. 
+            if (menu==0){
+                System.out.println("종료합니다");
+                break;
+            }else if ( !(1<=menu && menu<=3)){
+                System.out.println("제대로 선택하십쇼");
+                continue;
+
+            }
+            System.out.println("당신이 선택한 메뉴는"+menu+"입니다");
+            break;
+        }
+        
+    }
+}
+
+class NamingRepeat{//break사용시 가장 근접한 반복문을 빠져나가는데 반복문에 Naming할 경우 더 밖에 있는 반복문을 나갈 수 있음.
+    public static void main(String [] args){
+        Dan : for (int i=2; i<=5;i++){
+                for (int j=1; j<=9;j++){
+                    //4단만생략 if (i==4)break;
+                    if (i==4)break Dan;//3단까지만 출력
+                    System.out.printf("%d x %d = %d %n",i,j,i*j);
+                }
+        }
+    }
 }
