@@ -71,3 +71,15 @@ class OperatorEx3{
     }
 }
 
+class OperatorEx4{
+    public static void main(String [] args){
+        int x=5, y=3, i=10;
+        int result = (x>y)? x:y;//파이썬의 조건부표현식과 비슷한 느낌. 
+        System.out.println(result);
+        result = x>5? 10:(x==5?0:7);//다음과 같이 중첩도 가능하다.
+        System.out.println(result);
+        i *= 20+5;
+        System.out.println(i);//10*(20+5)
+    }
+}
+
