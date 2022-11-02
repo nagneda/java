@@ -117,7 +117,8 @@ class SwtichEx3{//중첩 switch문
                     case '3': System.out.println("당신은 젊은남자입니다");break;
                 }//break;
             case '2':case '4'://System.out.println("ㅎㅇ"); 위쪽 swtich문의 break를 달아주지 않을 시 case문의 실행문장에 해당하는 ㅎㅇ가 출력된다.
-            //다만 swtich문안의 문장까지는 실행이 되지 않음. case문의 break생략시 전체 case문 실행되는것과 다른 형태인듯하다.
+            //그리고 swich문의 조건식에 부합되면 case문까지 실행됨. 즉 case문에 break를 해주지 않았을때와 중첩switch문에 break를 해주지 않았을때 동일
+            //하게 switch문 전체 실행됨.
                 switch (num){
                     case '2': System.out.println("당신은 어른여자입니다");break;
                     case '4': System.out.println("당신은 젊은여자입니다");break;
@@ -128,3 +129,4 @@ class SwtichEx3{//중첩 switch문
         //결과값과 case값을 비교하지 않나..? 그 연산과정이 단순 정수,문자열과 비교하기 때문에 더 효율적이고 단순하다는건가.)
     }
 }
+

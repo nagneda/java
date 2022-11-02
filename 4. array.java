@@ -19,6 +19,24 @@ class Array{
         //출력되는 것과 동일한 원리. list화를 시켜줘야 했었음.
         char chararr[] = {'a','b','c','d'};
         System.out.println(chararr+" to String 출력 :"+Arrays.toString(chararr));
+        
+    }
+}
+
+
+class ArrayEx1{
+    public static void main(String args []){
+        int[] arr = {1,2,3,4,5};
+        for (int tmp : arr)
+            System.out.println(tmp);
+        System.out.println(Arrays.toString(arr));
+    }
+
+
+}
+
+class ArrayCopy{
+    public static void main(String [] args){
         //파이썬과 다르게 java에서는 배열의 크기를 정해놓고 사용해야 하며 부득이하게 배열의 길이를 늘리기 위해서는 더 큰 배열을 생성 후 기존배열을
         //복사하는 과정을 거쳐야만 한다.
         int origin[] = {1,2,3,4,5};
@@ -29,37 +47,145 @@ class Array{
         origin[1]=30;
         copy[2] = 50;
         System.out.println("copy 배열 출력 : "+Arrays.toString(copy)+"origin 배열 출력 : "+Arrays.toString(origin)); // 변경한 값이 같이 출력됨.
+
+        char [] abc = {'a','b','c','d'};
+        char [] num = {'1','2','3','4','5','6'};
+        char [] newarr = new char[abc.length+num.length];//abc와 num 요소 모두 저장할 수 있는 배열 생성
+        System.arraycopy(abc,0,newarr,0,abc.length);//arraycopy(옮기려는 배열,그 배열의 시작 인덱스,저장되는 배열,그 배열의 시작 인덱스,몇개)
+        System.out.println(newarr);
+        System.arraycopy(num,0,newarr,0,num.length);
+        System.out.println(newarr);
+        System.arraycopy(abc,0,newarr,num.length,abc.length);
+        System.out.println(newarr);
     }
 }
 
-class Test{
-    public static void main(String[] args){
-        float f = (float)1234;
-        byte b = 35;
-        byte c = 50;
-        long l = (byte)10000;
-        System.out.println(l);
-        System.out.println(b+c);
-        char chr = 65;
-        for (int i =65;i<=75;i++)
-            System.out.println((char)i);
-        long num =35l;
-        String str = "abc";
-        String str2 = "abc";
-        String str3 = "abc";
-        System.out.printf("str == str2 : %b %n str == \"abc\" : %b %n",str==str2,str3=="abc");
-        System.out.println(str.equals("abc"));
-        char al = 'a';
-        int al2 = 97;
-        System.out.println((int)al+"//"+(char)al2);
-        System.out.printf("%c ++ %d",(char)al2,(int)al);
-        Scanner scanner = new Scanner(System.in);
-        int aa=5, bb=0;
-        System.out.println(aa == 5 && ++bb==0);
-        System.out.printf(aa+""+bb);
-        int h = 0XAB;
-        System.out.printf(~aa+""+(aa<<2)+"%n");
-        System.out.println((35^57)^57);
+class ScoreCheck{
+    public static void main(String []args){
+        int[] score = {80,100,67,78,98,69,46,77};
+        int max = score[0], min = score[0];
+        for (int i=1; i<score.length;i++){//초기화를 score[0]으로 했으니 첫번째 요소부터 검사하기 위해 i=1로 초기화함.
+            if (score[i]>max) max=score[i];
+            else if  (score[i]<min) min = score[i];
+        
+        }System.out.printf("최소값 : %5d \t 최대값 : %5d %n",min,max);
+    }
+}
 
+class Lotto{
+    public static void main(String []args){
+        int [] arr = new int[45];
+        int i = 0;
+        for (i=0;i<arr.length;i++)
+            arr[i]=i+1;
+        int temp = 0;
+        int lot = 0;
+        for(i=0;i<=6;i++){
+            lot = (int)(Math.random()*45);//0~44가 저장 (인덱스번호)
+            temp = arr[i];
+            arr[i] = arr[lot];
+            arr [lot] = temp;
+        }System.out.println(Arrays.toString(arr));
+        
+        
+        //불연속적인 수 배열에 담기.
+        int [] ran = {4,2,-5,100,50,25-90};
+        int [] newrr = new int[15];
+
+        for (i=0;i<newrr.length;i++){
+            int imsi = (int)(Math.random()*ran.length);//0~6 인덱스 번호 저장. ran의 요소를 빼오기 위한 인덱스
+            newrr[i]=ran[imsi];
+        }
+        System.out.println(Arrays.toString(newrr));
+    }
+}
+
+class StringArray{
+    public static void main(String [] args){
+        String [] str = {"1234","5678","9012"};
+        System.out.println(str); 
+        String tmp = str[1].substring(0,4);// substring은 파이썬의 슬라이싱 개념과 동일.
+        System.out.println(tmp);
+
+        char [] chr = {'a','b','c','d'};
+        String sentence = "hello";
+        System.out.println(Arrays.toString(chr)+sentence);
+        System.out.println(Arrays.toString(sentence.toCharArray()));
+        System.out.println(new String(chr));
+        //char 타입의 배열은 원래 그냥 출력이 가능하기 때문에 문자열과 문자형을 구분할 수 없다(int타입과 다르게 배열명 그 자체로 출력시 요소들이 구분자
+        // 없이 붙어서 출력되기 때문) 그래서 Arrays.toString(char 타입 배열)을 이용하여 구분할 수 있다. 문자열을 넣으면 에러발생. 테스트해보기바람.
+        System.out.println("args 길이 :"+args.length);
+        for (int i=0;i<args.length;i++)System.out.println(args[i]);// cmd를 이용해 java 컴파일러 및 인터프리터로 실행해보길. 
+    }
+}
+
+class MultiArray{
+    public static void main(String[] args){
+        //다차원 배열은 DB의 테이블과 비슷한 모양이라고 생각하면 편하다.
+        int [][] arr = {
+                            {5,3,4},
+                            {4,2,1},
+                            {7,8,9},
+                            {1,2,3}
+                        };
+        int sum = 0;
+        for (int i = 0; i<arr.length;i++){
+            for (int j=0;j<arr[i].length;j++){
+                System.out.println(arr[i][j]);
+            }
+        }
+    }
+}
+
+class MultiArray1{
+    public static void main(String[] args){
+        final int SIZE = 10;
+        int x = 0, y = 0;
+        char[][] board = new char[SIZE][SIZE];
+        byte[][] shipBoard = {
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,1,0,1,0,0,0},
+            {0,0,1,0,1,0,0,0,0},
+            {1,0,0,1,0,1,0,0,1},
+            {0,1,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,1,1,1,1,0},
+            {0,0,1,0,0,1,0,1,0},
+            {0,1,0,0,0,0,0,0,0}
+        };
+        for (int i = 1; i<SIZE;i++){
+            board[0][i]=board[i][0]=(char)(i+'0');
+        }
+        Scanner scanner = new Scanner(System.in);
+
+        while(true){
+            System.out.println("좌표를 입력하세요(종료 : 00)");
+            String xy = scanner.nextLine();
+
+            if (xy.length()==2){
+                x=xy.charAt(0)-'0';
+                y=xy.charAt(1)-'0';
+                if (x==0&&y==0)break;
+            }
+            else if (xy.length()!=2 || x<=0 || x>=SIZE || y<=0 || y>=SIZE){
+                System.out.println("다시입력하세요");
+                continue;
+                
+            }
+            board[x][y] = shipBoard[x-1][y-1] == 1? 'O':'X';
+            for(int j=0;j<SIZE;j++){
+                System.out.println(board[j]);
+            }
+        }
+ 
+    }
+}
+
+class MultiArray2{
+    public static void main(String[] args){
+    char [] chr = new char[15];
+    for (int i=0; i<chr.length;i++){
+        System.out.println(chr[i]);
+    }
     }
 }
