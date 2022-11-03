@@ -112,11 +112,12 @@ class StringArray{
         System.out.println(Arrays.toString(chr)+sentence);
         System.out.println(Arrays.toString(sentence.toCharArray()));
         System.out.println(new String(chr));
-        //char 타입의 배열은 원래 그냥 출력이 가능하기 때문에 문자열과 문자형을 구분할 수 없다(int타입과 다르게 배열명 그 자체로 출력시 요소들이 구분자
-        // 없이 붙어서 출력되기 때문) 그래서 Arrays.toString(char 타입 배열)을 이용하여 구분할 수 있다. 문자열을 넣으면 에러발생. 테스트해보기바람.
+        //char 타입의 배열은 원래 그냥 출력이 가능하기 때문에 문자열과 문자형을 구분할 수 없다(int타입과 다르게 참조변수(배열명) 그 자체로 출력시 요소들이 구분자
+        // 없이 붙어서 출력되기 때문) 그래서 Arrays.toString(char 타입 배열)을 이용하여 구분할 수 있다. char array에 문자열을 넣으면 에러발생. 테스트해보기바람.
         System.out.println("args 길이 :"+args.length);
-        for (int i=0;i<args.length;i++)System.out.println(args[i]);// cmd를 이용해 java 컴파일러 및 인터프리터로 실행해보길. 
-    }
+        for (int i=0;i<args.length;i++)System.out.println(args[i]);// cmd를 이용해 java 컴파일러 및 인터프리터로 실행할때에 클래스 이름 다음의 사용자의
+        //입력을 받아서 처리해줌. main메서드의 string []args가 이것을 뜻함. String타입의 args 배열이라는 뜻.
+    }//컴퓨터 프로그래밍에서 대부분 공통적인 사항은 띄어쓰기를 구분자로 인식한다는 것. 파일명이나 경로등을 입력할때 띄어쓰기(공백)가 포함돼있다면 큰 따옴표로 묶어줘야한다.
 }
 
 class MultiArray{
@@ -187,5 +188,52 @@ class MultiArray2{
     for (int i=0; i<chr.length;i++){
         System.out.println(chr[i]);
     }
+    }
+}
+
+class Practice1{
+    public static void main(String [] args){
+        int[] randomarr = new int[5];
+        int tmp = 0, count =0;
+        //1~10사이의 난수를 가진 길이5의 randomarr배열 초기화 for문
+        for ( int i = 0; i<randomarr.length; i++)
+            randomarr[i] = (int)(Math.random()*10+1);
+        System.out.println("배열정리전 : "+Arrays.toString(randomarr));
+        while (true){
+            count =0 ;
+            for (int j = 0; j<randomarr.length-1;j++){
+                if (randomarr[j] > randomarr[j+1]){
+                    tmp=randomarr[j];
+                    randomarr[j]=randomarr[j+1];
+                    randomarr[j+1]=tmp;
+                    count+=1;
+                }
+            
+            }
+            if (count ==0) break;
+        }
+        System.out.println("배열정리후 : "+Arrays.toString(randomarr));
+        
+    }
+}
+class Shuffle{
+    public static void main(String [] args){
+        
+        int [] arr = new int[10];
+
+        for (int i =0; i<arr.length;i++)
+            arr[i]=i+1;
+        System.out.println("arr배열 : "+Arrays.toString(arr));
+
+        for (int j = 0; j<arr.length;j++){
+            int tmp = (int)(Math.random()*10);//0~9 사이의 난수 생성 (arr 인덱스 용도)
+            int num1 = arr[tmp];
+            arr[tmp] = arr[j];
+            arr[j] = num1;
+            
+        }
+        System.out.println("셔플 후 arr : " +Arrays.toString(arr)); 
+        
+        
     }
 }
