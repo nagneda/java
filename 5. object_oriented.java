@@ -118,9 +118,195 @@ class CardTest{
     }
 }
 class Method{
-    public static void main(String [] args){
         int add(int x, int y){
-            return x+y;
+            int result= x+y;
+            System.out.println(test(3,5));//얘는 static메서드를 호출 가능. 후술하겠지만 static메서드와 인스턴스 메서드의 개념 적용.
+            return result;
+            
         }
+        
+        int addsub(int x, int y){//메서드내의 매개변수를 포함한 변수들은 해당 메서드 내의 지역변수기 때문에 각 메서드별로 동일명을 사용해도 무관함.
+            int result = add(x,y)-10;//같은 클래스내의 add메소드를 참조변수없이(인스턴스 생성없이) 호출가능.
+            return result;
+        }
+        static int test(int x, int y){ return x*y;}//얘는 add나 addsub메소드를 객체생성없이 호출할 수 없음. static이 붙었기 때문.
+
+        float multiply(float x, float y){ return x/y;}
+        public static void main(String [] args){
+
+            Method mm = new Method();//static 메서드는 같은 클래스내라도 다른 메서드를 호출하려면 다음과 같이 인스턴스를 생성해야한다.
+            int result = mm.add(5,17);
+            int result2 = mm.addsub(100,50);//140이 반환값이 돼야함.
+            System.out.println(result+"//"+ result2);
+            System.out.println(test(7,5));//test메서드는 static이 붙었기 때문에 객체 생성없이 호출가능.
+        }
+}
+class MethodTest{
+    public static void main(String [] args){
+        Method mm = new Method();
+        System.out.println(mm.add(3,5));
+        System.out.println(mm.multiply(10,3));// 파라미터의 타입이 int라도 위쪽 매개변수 타입이 float이기 때문에 자동형변환됨. float x = 10;과 동일
+    }
+}
+//java는 파이썬과 다르게 메서드의 작성순서에 관계없이 메서드가 실행된다. 아마 파이썬은 인터프리터 형식이라 위에서부터 순차동작을 하기때문인 것 같고
+//java는 컴파일 후 class파일이 생성되기 때문에 이미 메서드에 관한 정보가 저장돼있기 때문이지 않을까 생각된다. 순서가 관계없다는 건 아래 예제를 통해 확인 가능.
+
+
+class CallStackFlow{
+    public static void main(String [] args){
+        System.out.println("main 메서드 실행");
+        first();
+        System.out.println("main 메서드 종료");
+    }
+    static void first(){
+        System.out.println("first 메서드 실행");
+        second();
+        System.out.println("first 메서드 종료");
+    }
+    static void second(){
+        System.out.println("second 메서드 실행!!");
+    }
+    //파이썬은 호출하려는 함수가 무조건 함수선언부보다 위에있어야 한다.
+}
+
+
+
+
+
+class Data{ int x;}
+class Data2{int y;}
+
+class DefaultAgrument{//기본형 매개변수로는 참조형 매개변수와 어떻게 다르게 동작하는지 알 수 있음.
+    public static void main(String [] args){
+        Data d = new Data();
+        d.x = 30;
+        System.out.println(d.x);
+        changevalue(d.x);
+        System.out.println(d.x);
+
+    }
+    static void changevalue (int x){//static 메서드가 아니라면 쓸데없이 main함수에서 DefaultAgrument의 객체를 생성해줘야 함. 반환타입이 void라 return 생략.
+        x=50;
+        System.out.println(x);
+    }
+}
+
+
+class ReferenceParamEx{//매개변수로 기본형이 아닌 참조형이 주어졌을 때 참조된 클래스의 인스턴스 변수가 변경될 수 있다는 것을 보여줌.
+    //즉 메서드내의 지역변수로서 국한되는 것이 아님.
+    public static void main(String [] args){
+        Data d = new Data();
+        Data2 h = new Data2();
+        d.x=20;
+        System.out.println("변경전:" +d.x);
+        change(d);//인자로 기본형 값이 아닌 참조변수를 줌, 즉 참조변수가 갖고 있는 인스턴스주소를 준 것과 마찬가지
+        System.out.println("변경후:" +d.x);
+        change2(h);
+        System.out.println("h.y는?"+h.y);
+
+        
+    }
+    static void change(Data a){//파라미터(인자)d로부터 받아온 주소는 참조형이기 때문에 Data(클래스명)타입 선언 후 메서드내에서 쓰일 참조변수명은 a로 설정
+        //Data d로 해도 관계없고 오히려 가독성이 좋으나 위에서 쓰인 d와 a는 결국 같은 주소를 가르키며 그러한 참조변수를 이용해 인스턴스변수(x)의
+        //값을 변경하는 건 결과적으로 같다는 것을 보여주기 위해 a라고 설정. 
+        a.x=1000;
+        System.out.println("change 실행:" +a.x);
+        
+    }
+    static void change2(Data2 b){//인자로 주어진 참조변수가 가르키는 클래스와 참조형 매개변수가 참조하는 클래스가 같아야 함.
+        // 즉 인자로 Data 클래스의 객체주소가 주어지면 참조형 매개변수의 주소도 Data를 가르켜야함.
+        b.y=500;
+    }
+
+}
+
+
+
+class ArrayAgrument{//배열을 메서드의 참조형 매개변수로 접근하는 예제 
+    public static void main(String [] args){
+        int [] arr = new int[5];
+        System.out.println(Arrays.toString(arr));
+        arrchange(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    static void arrchange(int [] agru){
+        // 마찬가지로 참조형 매개변수명을 인자의 변수와 동일한 arr로 하는게 맞으나 인자 변수명과 매개변수 변수명과 서로 다르다는 것을 보여주기 위함.
+        for (int i = 0; i<agru.length;i++)
+            agru[i]=i*10;
+
+    }
+}
+
+
+class Recursive{//재귀호출. 반복문으로 표현가능.
+    public static void main(String [] args){
+        numbering(100); 
+    }
+    static int numbering(int i){
+        if (i<=0) return 0;
+        
+        System.out.println(i);
+        return numbering(i-1);
+
+    }
+}
+
+
+
+class Member{// 같은 클래스내의 멤버끼리 참조가 가능하나 클래스멤버는 인스턴스 멤버를 참조할 수 없음을 보여주는 예제
+    int iv = 10;
+    
+    static int jv = new Member().iv; // 메서드내에서의 객체 생성과 밖에서랑 좀 다른 형태인듯.
+
+    void instancemethod(){
+        System.out.println(iv); //클래스변수 인스턴스 변수 둘다 사용가능
+        System.out.println(jv);
+    }
+    static void classmethod(){
+        // System.out.println(iv); 에러발생. iv는 인스턴스 변수기 때문에 클래스 멤버가 참조할 수 없음. 인스턴스(객체)를 생성해야함.
+        System.out.println(jv);
+
+    }
+
+    void instancemethod2(){ 
+        instancemethod();
+        classmethod();// 인스턴스 메서드에서는 클래스 메서드 사용가능
+    }
+    static void classmethod2(){
+        // instancemethod(); 클래스 메소드에서 인스턴스 메소드 사용 불가능.
+        classmethod();
+    }
+    
+    static void classmethod3(){
+        Member mem = new Member();//다음과 같이 인스턴스 생성 후 사용가능
+        mem.instancemethod();
+    }
+}
+
+
+class Ttt{
+    int x = 30;
+    int y = 50;
+    void tt(){
+        System.out.println(x+y);
+    }
+
+    static void tt2(){
+        Ttt t1 = new Ttt();
+        System.out.println(t1.x);//같은 클래슨 내에서 이렇게 클래스 메소드에서 인스턴스를 생성할바에 tt2 메소드는 그냥 인스턴스 메소드로 선언하는 편이 낫다.
+
+    }
+}
+
+
+class OverLoading{// 메소드의 이름이 같은데도 서로 다른 메소드로서 작동하게끔 중복해서 메소드를 생성하는 것을 오버로딩이라고 한다.
+    int add(int x, int y){return x+y;}
+    //int add(int a, int b){return a+b;} 매개변수명을 바꾸는 것만으로는 오버로딩할 수 없다.
+    long add(long x, long y){return x+y;}// 매개변수의 타입이 다르므로 오버로딩됨.
+    int add(int x, int y, int z){return x+y+z;}//매개변수의 갯수가 3개로 첫번째 add메서드와 오버로딩됨.
+
+
+    public static void main(String [] args){
+        
     }
 }
