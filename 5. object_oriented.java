@@ -96,27 +96,41 @@ class ObjectArr{
 class Card{
     int number;
     String kind;
-    static int width=100;//static을 사용하면
+    static int width=100;
     static int height=70;
+    static void test(){System.out.print("test입니다");}
+    void test1(){System.out.print("test2입니다");}
 }
 
 class CardTest{
-    public static void main(String [] args){
-        Card[] cardArr = new Card[5];
-        cardArr[0].width = 200; // 클래스 변수이기 때문에 인스터스가 생성되지 않아도 에러없이 동작하며 첫번째 참조변수의 두께만 바꿨는데도 참조변수 전체
-        //두께가 모두 200으로 바뀐것을 아래 출력문에서 확인할 수 있음.
-        //cardArr[0].number = 33;  이 코드는 초기화를 시키지 않았기 때문에 에러발생. number가 인스턴스 변수기 때문인 듯하다.
-        
-        //클래스변수를 사용하고자 할때는 참조변수.클래스변수의 형태보다는 클래스명.클래스변수의 형태로 사용하는 것이 좋다. 클래스변수를
-        //인스턴스 변수로 오해받을 수 있기 때문.
+    static void prin(Card [] cardArr){
         for (int i =0; i<cardArr.length;i++){
             cardArr[i]=new Card();
             cardArr[i].number = i+1;
             System.out.println("두께 :"+cardArr[i].width+"번호 : "+cardArr[i].number);
         }
-
     }
+    void what(){
+        Card c = new Card();
+        Card.test();
+        c.test1();
+    }
+    public static void main(String [] args){
+        Card[] cardArr = new Card[5];
+        cardArr[0].width = 200; // 클래스 변수이기 때문에 인스터스가 생성되지 않아도 에러없이 동작하며 첫번째 참조변수의 두께만 바꿨는데도 참조변수 전체
+        //두께가 모두 200으로 바뀐것을 아래 출력문에서 확인할 수 있음.
+        //cardArr[0].number = 33;  이 코드는 초기화를 시키지 않았기 때문에 에러발생. number가 인스턴스 변수기 때문인 듯하다.
+        prin(cardArr);
+        Card.width = 300;
+        //클래스변수를 사용하고자 할때는 참조변수.클래스변수의 형태보다는 클래스명.클래스변수의 형태로 사용하는 것이 좋다. 클래스변수를
+        //인스턴스 변수로 오해받을 수 있기 때문.
+        prin(cardArr);
+        //클래스변수에는 참조변수를 통하거나 클래스명을 통해서 접근할 수 있다.
+        Card.test();
+        }
+
 }
+
 class Method{
         int add(int x, int y){
             int result= x+y;
@@ -255,7 +269,7 @@ class Recursive{//재귀호출. 반복문으로 표현가능.
 
 class Member{// 같은 클래스내의 멤버끼리 참조가 가능하나 클래스멤버는 인스턴스 멤버를 참조할 수 없음을 보여주는 예제
     int iv = 10;
-    
+    public static void main(String args[]){}
     static int jv = new Member().iv; // 메서드내에서의 객체 생성과 밖에서랑 좀 다른 형태인듯.
 
     void instancemethod(){
@@ -306,7 +320,96 @@ class OverLoading{// 메소드의 이름이 같은데도 서로 다른 메소드
     int add(int x, int y, int z){return x+y+z;}//매개변수의 갯수가 3개로 첫번째 add메서드와 오버로딩됨.
 
 
+}
+// 같은 클래스내에서 인스턴스변수와 클래스변수를 서로 참조하는 법이 다르고 다른 클래스의 인스턴스 변수와 클래스
+// 변수를 참조하는 방법이 다르다. 확실히 짚고 넘어가야 할듯.
+
+class VarArgs{//입력받는 매개변수의 개수를 정확히 알 수 없을때 가독성과 효율을 위해 가변인자를 사용
     public static void main(String [] args){
+        String[] strarr1 = {"11","22","33"};
+        String[] strarr2 = new String[3];
+        System.out.print(Args.concatenate("","100","200","300"));
+        System.out.print(Args.concatenate("-",strarr1));
+        //System.out.print(Args.concatenate("-",strarr1,strarr2)); 배열을 뒤에 계속 넣게 되면 아래식을 바꾸던지 해야함. 이 코드는 배열을 배열화 시켜 2차원
+        //배열이 된 상태나 마찬가지임.
+
         
+    }
+    
+}
+
+
+class Args{
+    static String concatenate(String first, String... args){//가변인자는 매개변수 중 제일 마지막에 선언해야함.
+        String result = "";
+        System.out.println(Arrays.toString(args));
+        for (String str:args)//가변인자는 메서드 선언 될때 앞의 매개변수 개수를 제외한 나머지 요소들을 배열로 생성하기 때문에 for문을 이용. 위 출력문을 통해서도 알 수 있음.
+            result+=str+first;
+        return result;
+        
+    }
+}
+
+class D1{
+    int x;//생성자가 아무도 없기 때문에 컴파일러가 자동으로 default constructor 생성
+}
+
+class D2{
+    int value ;
+    D2(){} //생성자가 하나라도 있을 시 컴파일러는 추가 생성자 만들지 않음.
+}
+class Constructor{
+    static void main(String args[]){
+        D1 d1 = new D1();
+        D2 d2 = new D2();
+        
+    }
+}
+
+class CarInitialize{
+    String color ;
+    int year ;
+    int wheel ;
+    CarInitialize(String a,int b,int c){
+        color = a;
+        year = b ;
+        wheel = c;
+    }
+    CarInitialize(){}
+}
+
+class CarTest{
+    public static void main(String args[]){
+        CarInitialize c = new CarInitialize("blue",2022,4);
+        CarInitialize c1 = new CarInitialize();
+        c1.color = "red";
+        c1.year = 2018;
+        c1.wheel = 5;
+        System.out.println("c의 차 (매개변수로 차 정보 전달)"+c.color+c.year+c.wheel);  
+        System.out.println("c1의 차 (직접 차 정보 입력)"+c1.color+c1.year+c1.wheel);  
+    }
+}
+
+class Kim{
+    String str;
+    int num1, num2;
+    Kim(){
+        this("black",50,100);
+    }
+    Kim(String str, int num){
+        this(str,num,4);
+    }
+    Kim(String str, int num, int num2){
+        this.str= str;
+        this.num1= num;
+        this.num2 = num2;
+
+    }
+    public static void main(String [] args){
+        Kim j = new Kim();
+        Kim k = new Kim("white",55);
+        System.out.println("j 의 생성자 "+j.str+j.num1+j.num2);
+        System.out.println("k 의 생성자 "+k.str+k.num1+k.num2);
+
     }
 }
