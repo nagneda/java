@@ -233,7 +233,5 @@ class Shuffle{
             
         }
         System.out.println("셔플 후 arr : " +Arrays.toString(arr)); 
-        
-        
     }
 }

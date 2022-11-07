@@ -358,7 +358,7 @@ class D2{
     int value ;
     D2(){} //생성자가 하나라도 있을 시 컴파일러는 추가 생성자 만들지 않음.
 }
-class Constructor{
+class Constructor{//생성자는 인스턴스 변수가 생성될때 인스턴스 변수를 초기화 시켜주는 메서드이다.
     static void main(String args[]){
         D1 d1 = new D1();
         D2 d2 = new D2();
@@ -390,7 +390,7 @@ class CarTest{
     }
 }
 
-class Kim{
+class Kim{//생성자내에서 다른 생성자를 호출하기 위해서는 this()를 사용한다.
     String str;
     int num1, num2;
     Kim(){
@@ -400,8 +400,8 @@ class Kim{
         this(str,num,4);
     }
     Kim(String str, int num, int num2){
-        this.str= str;
-        this.num1= num;
+        this.str= str;//우변의 str은 생성자의 매개변수이자 지역변수, 좌변의 this.str은 인스턴스변수str
+        this.num1= num;//여기서 this는 곧 생성된 참조변수의 인스턴스  주소를 뜻함.
         this.num2 = num2;
 
     }
@@ -411,5 +411,52 @@ class Kim{
         System.out.println("j 의 생성자 "+j.str+j.num1+j.num2);
         System.out.println("k 의 생성자 "+k.str+k.num1+k.num2);
 
+    }
+}
+
+class CopyEx{
+    String str;
+    int num;
+    int num1 ;
+
+    CopyEx(String str, int num, int num1){
+        this.str = str;
+        this. num = num;
+        this .num1 = num1;
+    }
+    CopyEx(CopyEx c){
+        str = c.str;
+        num = c.num;
+        num1 = c.num1;
+    }
+}
+
+class InstCopy{
+    public static void main(String [] args){
+        CopyEx example = new CopyEx("hi",50, 100);
+        CopyEx example2 = new CopyEx(example);
+        System.out.println("example : "+example.str+example.num+example.num1);
+        System.out.println("example1 : "+example2.str+example2.num+example2.num1);
+        example.num = 300;
+        System.out.println("example : "+example.str+example.num+example.num1);
+        System.out.println("example1 : "+example2.str+example2.num+example2.num1);//이전의 참조변수끼리 주소를 대입한 형태와는 다름. 인스턴스 변수의
+        //값만 서로 공유했을 뿐임. 따라서 example의 인스턴스 변수값을 바꿨어도 example2의 값은 바뀌지 않음.
+    }
+}
+
+class InitBlock{
+    static{
+        System.out.println("static Initialize Block");
+    }
+    {
+        System.out.println("Instance Initialize Block");
+    }
+    public InitBlock(){//public이 붙은 메소드 실행시? default constructor는 public.클래스명(){}이다.
+        System.out.println("생성자다");
+    }
+    public static void main(String [] args){
+        InitBlock m = new InitBlock();//인스턴스 생성1
+        InitBlock m1 = new InitBlock();//인스턴스 생성2
+        //생성자와 인스턴스 초기화블럭 모두 인스턴스 생성시 실행됨. 클래스 초기화 블럭은 처음 1회만 수행된다.
     }
 }
