@@ -14,6 +14,13 @@ class FlowEx2{
             System.out.println("입력하신 숫자는 0이 아닙니다");
         }
         //else문 활용하기
+
+        if (input == 0)
+            System.out.println("입력하신 숫자는 0입니다");//블럭 생략가능 및 조건문 바로옆에 작성가능. 블럭 생략하고 아래줄에 코드 작성시 그 아래의
+            //코드는 조건문에 포함되지 않는다.
+        else
+            System.out.println("입력하신 숫자는 0이 아닙니다");
+        
         
        
     }
@@ -24,7 +31,7 @@ class Score{
         
         System.out.println("당신의 점수를 입력하세요");
         Scanner scanner = new Scanner(System.in);
-        int score = scanner.nextInt();
+        int score = scanner.nextInt();//String타입의 변수로 입력값을 받지 않고 그 문자열을 닷 Integer.parseInt();로 변환시켜주지 않아도 됨.
         char grade = ' ';
         if (score>90){
             grade = 'A';
@@ -85,7 +92,19 @@ class SwitchEx1{
                 break;
             default:
                 System.out.println("아무것도 아닙니다");
-        }
+        }//switch의 끝
+
+        System.out.println("몇월인지 문자로 입력하세요  ex)5월");
+        int sentence = scanner.nextInt();
+        System.out.println("몇월인지 문자로 입력하세요  ex)5월");
+        Scanner scanner1 = new Scanner(System.in);
+        String str = scanner1.nextLine();
+        scanner1.nextInt();
+        // switch (sentence){
+        //     case "1월":case "2월": case "3월":
+        //         System.out.println("봄입니다");
+        //         break;
+        // }
     }
 }
 class SwitchEx2{
@@ -93,7 +112,7 @@ class SwitchEx2{
         System.out.println("가위(1)바위(2)보(3)중 하나를 입력하세요");
         Scanner scanner = new Scanner(System.in);
         int num = scanner.nextInt();
-        int com = (int)(Math.random()*3)+1;//python의 random.randint와 같은 난수 생성 메소드라고 보면됨.
+        int com = (int)(Math.random()*3)+1;//python의 random.randint와 같은 난수 생성 메소드라고 보면됨. 좌측의 식은1~3사이의 난수를 생성하는 식
         System.out.println("당신 : "+num+"  /  "+"컴퓨터 :"+com);
         switch (num-com){
             case -1:case 2:System.out.println("당신이 졌습니다");break;
@@ -116,7 +135,9 @@ class SwtichEx3{//중첩 switch문
                     case '1': System.out.println("당신은 어른남자입니다");break;
                     case '3': System.out.println("당신은 젊은남자입니다");break;
                 }//break;
-            case '2':case '4'://System.out.println("ㅎㅇ"); 위쪽 swtich문의 break를 달아주지 않을 시 case문의 실행문장에 해당하는 ㅎㅇ가 출력된다.
+            case '2':case '4':System.out.println("ㅎㅇ");
+            //위쪽 swtich문의 break를 달아주지 않을 시 case문의 실행문장에 해당하는 ㅎㅇ가 출력된다. case문의 break의 역할은 조건에 해당하는
+            //문장을 실행후 곧바로 switch문을 종료하는 것이나 break가 없다면 실행문장 아래부터는 조건과 관계없이 모든 문장이 실행된다.
             //그리고 swich문의 조건식에 부합되면 case문까지 실행됨. 즉 case문에 break를 해주지 않았을때와 중첩switch문에 break를 해주지 않았을때 동일
             //하게 switch문 전체 실행됨.
                 switch (num){

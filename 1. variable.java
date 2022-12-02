@@ -74,8 +74,12 @@ class scanner {
 		System.out.println("입력내용(정수변환전) :"+input);
 		int num = Integer.parseInt(input);
 
+		Scanner scanner1 = new Scanner(System.in);
+		int input1 = scanner.nextInt();
+
 		System.out.println("입력내용(정수변환후) :"+input);
 		System.out.printf("입력내용(printf+ 지시자를 이용) : %d",num);
+		System.out.printf("입력내용(printf+ 지시자를 이용) : %d",input1);
 		
 	}
 }
@@ -101,10 +105,12 @@ class Overflow {
 		char cMin=0;
 		char cMax=65535;
 		
-		System.out.println("sMin : " + sMin);
+		System.out.println("sMin : " + sMin+(sMin-1));
 		System.out.println("sMin-1 : " + (short)(sMin-1));//위의 test 변수와는 다르게 다음과 같이 다시 변수선언을 하게 되면 원하는 결과값이 나온다.
 		//만약 short가 없다면 sMin-1에 해당하는  -32768이 출력. 왜냐하면 그 숫자를 short 정수형에 저장한 것이 아니기 때문.
-		System.out.println("cMax+1 : "+(int)(++cMax));//++의 기능을 잘 모르겠다 (int)(cMax+1)하면 65536출력됨.
+		System.out.println("cMax+1 : "+(int)(cMax+1));
+		System.out.println("cMax+1 : "+(int)(++cMax));//++의 기능을 잘 모르겠다 
+		
 	}
 }
 
@@ -168,7 +174,7 @@ class CastingEx1 {
 
 		char ch = (char)1000;
 		System.out.println(ch);
-		byte b=(byte)1000;//byte b = 1000;이면 에러발생
+		byte b=(byte)1000;//byte b = 1000;이면 에러발생, byte는 4bit만 저장가능 정수범위로보면 -128~127
 		System.out.println(b);
 		long c = 100l; // int c = 1000l; 안된다 float f = 3.14d;와 같은 격
 	}

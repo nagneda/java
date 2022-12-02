@@ -14,7 +14,7 @@ class Array{
         int arr4[];
         //arr4 ={1,2,3,4,5,6}; 다음과 같이 선언과 생성을 따로 할 경우에는 new int[] 생략불가
         arr4 = new int[]{1,2,3,4,5,6};
-        System.out.println(Arrays.toString(arr4)+"%n참조변수 arr4 출력 : "+arr4); //배열의 전체요소를 출력하는 Arrays.toString(배열명) 사용시 inport java.util.*; 작성해야함
+        System.out.println(Arrays.toString(arr4)+"%n참조변수 arr4 출력 : "+arr4); //배열의 전체요소를 출력하는 Arrays.toString(배열명) 사용시 import java.util.*; 작성해야함
         //참조변수를 직접 출력하는 것은 마치 python에서 map같은 함수를 썼을때 그 자체를 출력하면 반복가능한 요소의 데이터의 형태로 이상한 값이
         //출력되는 것과 동일한 원리. list화를 시켜줘야 했었음.
         char chararr[] = {'a','b','c','d'};
@@ -43,11 +43,13 @@ class ArrayCopy{
         int copy[] = new int[(origin.length)*2];//기존 배열보다 2배 더 큰 배열 copy 생성
         for (int i=0 ; i<origin.length; i++)
             copy[i]=origin[i];
+        System.out.println("copy: " +Arrays.toString(copy));
+        System.out.println("origin: "+Arrays.toString(origin));
         origin = copy;//두 참조변수가 같은 배열(copy)를 가르키게 됨.
         origin[1]=30;
         copy[2] = 50;
         System.out.println("copy 배열 출력 : "+Arrays.toString(copy)+"origin 배열 출력 : "+Arrays.toString(origin)); // 변경한 값이 같이 출력됨.
-
+        // origin배열의 길이가 늘어난 것이 아니라 copy배열의 객체 주솔르 참고해서 같은 배열을 가르키고 있는 것 뿐임.
         char [] abc = {'a','b','c','d'};
         char [] num = {'1','2','3','4','5','6'};
         char [] newarr = new char[abc.length+num.length];//abc와 num 요소 모두 저장할 수 있는 배열 생성
@@ -77,13 +79,14 @@ class Lotto{
         int [] arr = new int[45];
         int i = 0;
         for (i=0;i<arr.length;i++)
-            arr[i]=i+1;
+            arr[i]=i+1; // 1~45번까지 저장
         int temp = 0;
         int lot = 0;
         for(i=0;i<=6;i++){
-            lot = (int)(Math.random()*45);//0~44가 저장 (인덱스번호)
-            temp = arr[i];
-            arr[i] = arr[lot];
+            lot = (int)(Math.random()*45);//0~44가 저장 (인덱스번호) , math.random()이 0~1사이의 난수를 생성.
+            //arr의 값들을 랜덤으로 섞는 과정
+            temp = arr[i]; //arr[i]의 값을 임시저장
+            arr[i] = arr[lot]; 
             arr [lot] = temp;
         }System.out.println(Arrays.toString(arr));
         
@@ -96,7 +99,7 @@ class Lotto{
             int imsi = (int)(Math.random()*ran.length);//0~6 인덱스 번호 저장. ran의 요소를 빼오기 위한 인덱스
             newrr[i]=ran[imsi];
         }
-        System.out.println(Arrays.toString(newrr));
+        System.out.println("불연속적인 수 newrr 출력 : "+Arrays.toString(newrr));
     }
 }
 
@@ -119,7 +122,7 @@ class StringArray{
         //입력을 받아서 처리해줌. main메서드의 string []args가 이것을 뜻함. String타입의 args 배열이라는 뜻.
     }//컴퓨터 프로그래밍에서 대부분 공통적인 사항은 띄어쓰기를 구분자로 인식한다는 것. 파일명이나 경로등을 입력할때 띄어쓰기(공백)가 포함돼있다면 큰 따옴표로 묶어줘야한다.
 }
-
+        // string자료형.toCharArray(), new String(char배열)
 class MultiArray{
     public static void main(String[] args){
         //다차원 배열은 DB의 테이블과 비슷한 모양이라고 생각하면 편하다.
@@ -129,7 +132,7 @@ class MultiArray{
                             {7,8,9},
                             {1,2,3}
                         };
-        int sum = 0;
+      
         for (int i = 0; i<arr.length;i++){
             for (int j=0;j<arr[i].length;j++){
                 System.out.println(arr[i][j]);
@@ -184,10 +187,14 @@ class MultiArray1{
 
 class MultiArray2{
     public static void main(String[] args){
-    char [] chr = new char[15];
+    char [] chr = new char[6];
+    String []sen = new String[10];
     for (int i=0; i<chr.length;i++){
         System.out.println(chr[i]);
-    }
+    }//char배열의 기본값은 공백.
+    for (int i=0; i<sen.length;i++){
+        System.out.println(sen[i]);
+    }//String배열의 기본값은 null 
     }
 }
 
@@ -195,14 +202,15 @@ class Practice1{
     public static void main(String [] args){
         int[] randomarr = new int[5];
         int tmp = 0, count =0;
+
         //1~10사이의 난수를 가진 길이5의 randomarr배열 초기화 for문
         for ( int i = 0; i<randomarr.length; i++)
             randomarr[i] = (int)(Math.random()*10+1);
         System.out.println("배열정리전 : "+Arrays.toString(randomarr));
         while (true){
             count =0 ;
-            for (int j = 0; j<randomarr.length-1;j++){
-                if (randomarr[j] > randomarr[j+1]){
+            for (int j = 0; j<randomarr.length-1;j++){//오름차순으로 정리하기 위한 for문, 아래 if문의 조건때문에 반복범위가 length-1임.
+                if (randomarr[j] > randomarr[j+1]){//현재 인덱스번호의 요소가 다음 요소보다 값이 크면 다음 요소랑 현재요소의 값을 변경.
                     tmp=randomarr[j];
                     randomarr[j]=randomarr[j+1];
                     randomarr[j+1]=tmp;
@@ -210,7 +218,7 @@ class Practice1{
                 }
             
             }
-            if (count ==0) break;
+            if (count ==0) break; // 인덱스0번부터 끝까지 단 한번의 자리 교체도 일어나지 않았다면 count는 0일 것이고 배열이 정리된 것이므로 break.
         }
         System.out.println("배열정리후 : "+Arrays.toString(randomarr));
         
@@ -222,7 +230,7 @@ class Shuffle{
         int [] arr = new int[10];
 
         for (int i =0; i<arr.length;i++)
-            arr[i]=i+1;
+            arr[i]=i+1;// 1~10으로 순서대로 arr배열을 초기화
         System.out.println("arr배열 : "+Arrays.toString(arr));
 
         for (int j = 0; j<arr.length;j++){

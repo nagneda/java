@@ -21,9 +21,9 @@ class ForEx2{
         //중첩 for문 별찍기
 
         for (int j=1;j<=5;j++){
-            for (int k=1;k<=10;k++){
+            for (int k=1;k<=10;k++)
                 System.out.print("*");
-            }System.out.println("");
+            System.out.println("");
         }
 
         for (int j=1;j<=5;j++){
@@ -47,6 +47,7 @@ class EnhancedFor{
 
         for (int tmp : arr)System.out.println(tmp);//향상된 for문 작성방법. 타입 변수명은 배열 혹은 컬렉션의 타입이어야 하며 콜론 뒤에는 반복가능한
         //요소가 들어와야 한다. python의 for i(반복가능한 요소의 원소) in 반복가능한 요소(iterable)의 형태와 비슷. arr가 반복가능요소이며 tmp는 원소로서 작용.
+        //arr의 원소의 타입, 즉 int타입으로 원소를 받을 수 있는 변수인 tmp를 생성한 것.
     }//End of main
 }
 
@@ -54,10 +55,11 @@ class While{
     public static void main(String [] args){
          int i=1;
          while (i<=10){
-            i++;
             System.out.println(i);
+            i++;
          }
-         i=0;
+         i=0; // i의 초기화
+         //위아래 같은 식임.
          while (i++!=10){ //조건식에 증감연산자가 들어가는 것은 조건식이 평가 된 후 증감됨. 단 후위형만 가능하고 전위형은 전혀 다른 식이 된다.
             System.out.println(i);
          }
@@ -133,11 +135,13 @@ class DoWhileEx2{
             System.out.printf("i=%d",i);
             int tmp=i;
             do{
-                if(tmp%10%3==0 && tmp%10!=0)
+                if(tmp%10%3==0 && tmp%10!=0)//좌변의 식은 10의 자리를 빼고 일의 자리만 계산하기 위해서 10으로 나눈 나머지를 구함
+                //그러나 일의 자리수가 없는 경우에는 나머지가 0이기 때문에 일의자리 숫자가 3의 배수인지 판단하는 %3의 식에서도 참이되버리기 때문에
+                //tmp % 10!=0이라는 식이 붙음
                     System.out.print("짝");
-            }while((tmp/=10)!=0);//몫을 판별하기 위해 10의 자리 수를 몫으로 가지며 tmp에 저장
+            }while((tmp/=10)!=0);//몫을 판별하기 위해 10의 자리 수를 몫으로 가지며 tmp에 저장, tmp = (tmp / 10) ex)tmp가 34이면 3이 tmp에 저장됨
             System.out.println();
-                
+            //전체 계산순서가 일의자리 숫자 검사 > 일의 자리숫자를 버리고 십의 자리숫자가 일의 자리숫자로 이동, 다시 일의자리 숫자 검사
             }
         }
 }
@@ -149,7 +153,7 @@ class ContinueEx1{
 
         while (true){
             System.out.println("메뉴를 선택하세요 1~3(0은 종료)");
-            menu = scanner.nextInt();// String tmp = scanner.nextLine(); menu = Integer.parseInt(tmp); 입력받은 숫자문자열을 정수화 시킴. 
+            menu = scanner.nextInt();// String tmp = scanner.nextLine();   int menu = Integer.parseInt(tmp); 입력받은 숫자문자열을 정수화 시킴. 
             if (menu==0){
                 System.out.println("종료합니다");
                 break;
@@ -181,9 +185,9 @@ class Star{
     public static void main(String [] args){
         for (int i = 1; i<=7;i++){
             for (int j= 1; j<=7-i;j++)
-                System.out.print(' ');
-            for (int k=1;k<=i*2;k++)//조건식의 표현에 따라서 피라미드의 모양을 조정할 수 있음. 파이썬에서는 작성해본적없던 for문 속 각기 다른 for문 2개.
-                System.out.print('*');//python에서는 문자열에 *를 사용해서 문자열의 반복을 출력할 수 있었기 때문에 조건식의 뱐수를 이용해 문자열의 *를 해줄시
+                System.out.print(" ");
+            for (int k=1;k<=(i*2)-1;k++)//조건식의 표현에 따라서 피라미드의 모양을 조정할 수 있음. 파이썬에서는 작성해본적없던 for문 속 각기 다른 for문 2개.
+                System.out.print('*');//python에서는 문자열에 *를 사용해서 문자열의 반복을 출력할 수 있었기 때문에 조건식의 변수를 이용해 문자열의 *를 해줄시
             System.out.println("");//for문의 갯수도 줄어들고 간략했음.
         }
         

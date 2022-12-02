@@ -3,6 +3,11 @@ class Instance{
     public static void main( String []args){
         String str; //string클래스의 str이라는 참조변수를 선언.
         str = new String("하이"); //객체를 생성 후 객체 주소를 참조변수에 저장.
+
+        String str2 = new String("하이2");
+        String str3= "하이3";//String클래스는 다음과 같이 객체 생성하는 것을 허용함.
+
+        System.out.println(str+str2+str3);
     }
 }
 
@@ -26,19 +31,20 @@ class TvTest{
         tele.channel = 50; // 인스턴스를 불러오지 않으면 각 타입에 맞는 기본값을 가짐. channel은 int니까 0, color는 String이라 null.
         tele.color = "green";
         Scanner scanner = new Scanner(System.in);
-        System.out.println("tv를 켜려면 1, 끄려면 0을 입력하세요.");
+        System.out.println("tv를 켜려면 1, 끄려면 아무거나 입력하세요.");
         int input = scanner.nextInt();
         if (input == 1){
                 
             tele.power();
             System.out.printf("채널 : %d, tv색상 : %s 전원상태 : %b %n",tele.channel,tele.color,tele.power);
-        }
+        }else System.out.println("종료합니다");
         while(tele.power){
             
-            System.out.println("채널up : 1, 채널down :2, tv종료 :0");
+            System.out.println("tv종료 :0, 채널up : 1, 채널down :2");
             input = scanner.nextInt();
             switch(input){
-                case 0: tele.power();
+                case 0: 
+                    tele.power();
                     System.out.println("Tv를 종료합니다");
                     break;
                 case 1: {
@@ -65,9 +71,12 @@ class TvTest2{//인스턴스2개를 생성했을때의 멤버변수의 값은 �
         t1.color = "blue";
         t2.color = "green";
         System.out.printf("t1 : %d,%s t2 : %d%s %n",t1.channel,t1.color,t2.channel,t2.color);
+        
+        
+        t2=t1;
         //각각 다른 인스턴스의 주소를 가지고있는 참조변수 t1과 t2가 t1의 인스턴스 주소를 같이 공유하게 됨.
         //t1이 가지고있던 주소와 값을 t2에 저장. 즉 t2가 t1과 하나가 되며(인스턴스 주소가 t1) 참조변수만 2개로 늘어난 것.
-        t2=t1;
+        
         System.out.printf("t1 : %d,%s t2 : %d%s %n",t1.channel,t1.color,t2.channel,t2.color);//결정적으로 이 코드를 보면 어떻게 동작하는지 이해할 수 있다.
         t2.channel = 50;
         System.out.printf("t1 : %d,%s t2 : %d%s %n",t1.channel,t1.color,t2.channel,t2.color);
@@ -98,8 +107,8 @@ class Card{
     String kind;
     static int width=100;
     static int height=70;
-    static void test(){System.out.print("test입니다");}
-    void test1(){System.out.print("test2입니다");}
+    static void test(){System.out.print("static 메서드 test입니다");}
+    void test1(){System.out.print("void 메서드 test2입니다");}
 }
 
 class CardTest{
@@ -110,10 +119,14 @@ class CardTest{
             System.out.println("두께 :"+cardArr[i].width+"번호 : "+cardArr[i].number);
         }
     }
-    void what(){
+    static void what(){
         Card c = new Card();
-        Card.test();
-        c.test1();
+        Card.test();// 스태틱 메서드인 what에서 Card 클래스의 static 메서드인 test에 접근가능함을 확인가능
+        c.test1();// 스태틱 매서드인 what에서 Card클래스의 인스턴스 메서드인 test1에 접근가능하기 위해 참조변수 c를 통해 접근가능.
+        //사실여기서 what메서드가 스태틱이냐 인스턴스냐가 test1과 test2의 접근가능여부와는 상관이 없다. 다만 반대의 경우가 됐을때 다른 클래스에서
+        //what에 어떻게 접근할 수 있느냐, 그리고 같은 클래스내에서의 인스턴스 메소드끼리 참조가 가능하다 등의 문제가 남아있을 뿐이다. 
+        //인스턴스 메서드든 static메서드든 다른 클래스의 static메서드는 참조변수없이 사용 가능하며 다른클래스의 인스턴스메서드는 참조변수를 생성해야만 
+        //사용가능.
     }
     public static void main(String [] args){
         Card[] cardArr = new Card[5];
@@ -122,11 +135,12 @@ class CardTest{
         //cardArr[0].number = 33;  이 코드는 초기화를 시키지 않았기 때문에 에러발생. number가 인스턴스 변수기 때문인 듯하다.
         prin(cardArr);
         Card.width = 300;
-        //클래스변수를 사용하고자 할때는 참조변수.클래스변수의 형태보다는 클래스명.클래스변수의 형태로 사용하는 것이 좋다. 클래스변수를
-        //인스턴스 변수로 오해받을 수 있기 때문.
+        //클래스변수를 사용하고자 할때는 위처럼 cardArr[0].width처럼 참조변수.클래스변수의 형태보다는 클래스명.클래스변수의 형태로 사용하는 것이 좋다. 
+        //클래스변수를 인스턴스 변수로 오해받을 수 있기 때문.
         prin(cardArr);
         //클래스변수에는 참조변수를 통하거나 클래스명을 통해서 접근할 수 있다.
         Card.test();
+        what();
         }
 
 }
@@ -148,11 +162,14 @@ class Method{
         float multiply(float x, float y){ return x/y;}
         public static void main(String [] args){
 
-            Method mm = new Method();//static 메서드는 같은 클래스내라도 다른 메서드를 호출하려면 다음과 같이 인스턴스를 생성해야한다.
+            Method mm = new Method();//static 메서드는 같은 클래스내라도 인스턴스 메서드를 호출하려면 다음과 같이 인스턴스를 생성해야한다.
+            //그래서 같은 클래스내에서 인스턴스 메소드를 사용하기 위해 참조변수를 생성했다면 메소드 타입의 선언을 잘못하지 않았는지 생각해봐야한다.
             int result = mm.add(5,17);
             int result2 = mm.addsub(100,50);//140이 반환값이 돼야함.
-            System.out.println(result+"//"+ result2);
+            int result3 = test(50,10);//static 메서드인 test에는 바로 접근 가능. 
             System.out.println(test(7,5));//test메서드는 static이 붙었기 때문에 객체 생성없이 호출가능.
+            System.out.println(result+"//"+ result2+"//"+result3);
+            
         }
 }
 class MethodTest{
@@ -199,9 +216,9 @@ class DefaultAgrument{//기본형 매개변수로는 참조형 매개변수와 �
         System.out.println(d.x);
 
     }
-    static void changevalue (int x){//static 메서드가 아니라면 쓸데없이 main함수에서 DefaultAgrument의 객체를 생성해줘야 함. 반환타입이 void라 return 생략.
+    static void changevalue (int x){//static 메서드가 아니라면 쓸데없이 main함수에서 DefaultArgument(현재 클래스 이름)의 객체를 생성해줘야 함. 
         x=50;
-        System.out.println(x);
+        System.out.println(x);//반환타입이 void라 return 생략.
     }
 }
 
@@ -270,7 +287,8 @@ class Recursive{//재귀호출. 반복문으로 표현가능.
 class Member{// 같은 클래스내의 멤버끼리 참조가 가능하나 클래스멤버는 인스턴스 멤버를 참조할 수 없음을 보여주는 예제
     int iv = 10;
     public static void main(String args[]){}
-    static int jv = new Member().iv; // 메서드내에서의 객체 생성과 밖에서랑 좀 다른 형태인듯.
+    static int jv = new Member().iv; // Member arg = new Member(); / arg.iv; 와 같은 형태임. 참조변수의 주소를 변수에 저장하지 않고 
+    //참조하는데서만 잠깐 쓰기 때문에 new Member(). 의 형태로 인스턴스 변수인 iv에 잠깐만 접근.
 
     void instancemethod(){
         System.out.println(iv); //클래스변수 인스턴스 변수 둘다 사용가능
@@ -318,28 +336,36 @@ class OverLoading{// 메소드의 이름이 같은데도 서로 다른 메소드
     //int add(int a, int b){return a+b;} 매개변수명을 바꾸는 것만으로는 오버로딩할 수 없다.
     long add(long x, long y){return x+y;}// 매개변수의 타입이 다르므로 오버로딩됨.
     int add(int x, int y, int z){return x+y+z;}//매개변수의 갯수가 3개로 첫번째 add메서드와 오버로딩됨.
+    //즉 오버로딩의 목적은 같은 이름을 가진 메서드라도 매개변수의 타입이나 개수에 따라 다른 기능을 구현하고 싶을때 사용. 같은 메서드명을 사용한다는건
+    //결국 다 비슷한 기능을 하겠구나 라는 것을 사용자가 알기 쉬움.
 
 
 }
 // 같은 클래스내에서 인스턴스변수와 클래스변수를 서로 참조하는 법이 다르고 다른 클래스의 인스턴스 변수와 클래스
 // 변수를 참조하는 방법이 다르다. 확실히 짚고 넘어가야 할듯.
 
-class VarArgs{//입력받는 매개변수의 개수를 정확히 알 수 없을때 가독성과 효율을 위해 가변인자를 사용
+class VarArgs{
     public static void main(String [] args){
         String[] strarr1 = {"11","22","33"};
         String[] strarr2 = new String[3];
-        System.out.print(Args.concatenate("","100","200","300"));
+        System.out.print(Args.concatenate("55","10","200","300"));
         System.out.print(Args.concatenate("-",strarr1));
         //System.out.print(Args.concatenate("-",strarr1,strarr2)); 배열을 뒤에 계속 넣게 되면 아래식을 바꾸던지 해야함. 이 코드는 배열을 배열화 시켜 2차원
         //배열이 된 상태나 마찬가지임.
-
+        test("1","2","3","4");
         
+    }
+    static void test(String... args){//(String... args)는 test메서드의 인자로 주어진 자료형들을 String자료형인 args배열로 만들어버림.  
+        for(String tmp:args){
+            System.out.println(tmp);
+        }
+
     }
     
 }
 
 
-class Args{
+class Args{//입력받는 매개변수의 개수를 정확히 알 수 없을때 가독성과 효율을 위해 가변인자를 사용
     static String concatenate(String first, String... args){//가변인자는 매개변수 중 제일 마지막에 선언해야함.
         String result = "";
         System.out.println(Arrays.toString(args));
@@ -375,7 +401,7 @@ class CarInitialize{
         year = b ;
         wheel = c;
     }
-    CarInitialize(){}
+    CarInitialize(){}//매개변수가 없는 기본 생성자는 클래스가 생성될때? 실행되는 듯.
 }
 
 class CarTest{
@@ -400,9 +426,11 @@ class Kim{//생성자내에서 다른 생성자를 호출하기 위해서는 thi
         this(str,num,4);
     }
     Kim(String str, int num, int num2){
-        this.str= str;//우변의 str은 생성자의 매개변수이자 지역변수, 좌변의 this.str은 인스턴스변수str
-        this.num1= num;//여기서 this는 곧 생성된 참조변수의 인스턴스  주소를 뜻함.
+        this.str= str;//우변의 str은 생성자의 매개변수이자 지역변수, 좌변의 this.str은 인스턴스변수str. 
+        this.num1= num;
         this.num2 = num2;
+
+        //생성자내에서 this. 은 곧 생성된 참조변수의 인스턴스  주소를 뜻함.
 
     }
     public static void main(String [] args){
@@ -416,7 +444,7 @@ class Kim{//생성자내에서 다른 생성자를 호출하기 위해서는 thi
 
 class CopyEx{
     String str;
-    int num;
+    int num=1000;
     int num1 ;
 
     CopyEx(String str, int num, int num1){
@@ -428,6 +456,12 @@ class CopyEx{
         str = c.str;
         num = c.num;
         num1 = c.num1;
+        System.out.println(str+num+num1); //여기서 str, num, num1은 this.이 생략돼있음. 즉 CopyEx클래스의 인스턴스 변수가 아니라 매개변수로 들어오는
+        //c의 인스턴스변수값만 변경되는 것임.
+    }
+    CopyEx(){
+        System.out.println(str+num+num1);//이 문장의 출력은 인자없이 생성된 example3의 인스턴스 변수를 출력. CopyEx example2 = new CopyEx(example);
+        //이 코드를 통해 인스턴스 변수들의값이 변경됐다면 example3의 변수들의 기본값도 hi,50,100으로 같아야하지만 그렇지 않음.
     }
 }
 
@@ -435,8 +469,10 @@ class InstCopy{
     public static void main(String [] args){
         CopyEx example = new CopyEx("hi",50, 100);
         CopyEx example2 = new CopyEx(example);
+        CopyEx example3 = new CopyEx();
         System.out.println("example : "+example.str+example.num+example.num1);
         System.out.println("example1 : "+example2.str+example2.num+example2.num1);
+        System.out.println("example3 : "+example3.str+example3.num+example3.num1);
         example.num = 300;
         System.out.println("example : "+example.str+example.num+example.num1);
         System.out.println("example1 : "+example2.str+example2.num+example2.num1);//이전의 참조변수끼리 주소를 대입한 형태와는 다름. 인스턴스 변수의
@@ -445,18 +481,18 @@ class InstCopy{
 }
 
 class InitBlock{
-    static{
+    static{//클래스 초기화블럭
         System.out.println("static Initialize Block");
     }
-    {
+    {//인스턴스 초기화블럭
         System.out.println("Instance Initialize Block");
     }
-    public InitBlock(){//public이 붙은 메소드 실행시? default constructor는 public.클래스명(){}이다.
+    public InitBlock(){//public이 붙은 생성자의 default constructor는 public.클래스명(){}이다.
         System.out.println("생성자다");
     }
     public static void main(String [] args){
         InitBlock m = new InitBlock();//인스턴스 생성1
         InitBlock m1 = new InitBlock();//인스턴스 생성2
         //생성자와 인스턴스 초기화블럭 모두 인스턴스 생성시 실행됨. 클래스 초기화 블럭은 처음 1회만 수행된다.
-    }
+    } 
 }
